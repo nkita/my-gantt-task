@@ -111,21 +111,31 @@ const tasks = [
   },
 ];
 
-const element = (
-  <div>
-    <Header />
-    <Top />
-    <Gantt
-      viewMode={"Day"}
-      viewDate={20220317}
-      tasks={tasks}
-      ganttHeight={350}
-    />
-    <Footer />
-  </div>
-)
+function addTask() {
+  console.log("add Action fnc");
+}
+
+function Element() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <Header />
+      <Top addTask={addTask} />
+      <Gantt
+        viewMode={"Day"}
+        viewDate={20220317}
+        tasks={tasks}
+        ganttHeight={350}
+      />
+      {/* <Footer /> */}
+    </div>
+  )
+}
+
+
 ReactDOM.render(
-  element,
+  <Element />,
   document.getElementById("root")
 );
 
