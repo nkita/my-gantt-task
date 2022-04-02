@@ -6,25 +6,20 @@ export class Top extends React.Component {
     constructor(props) {
         super(props)
         this.addTask = props.addTask;
-        this.changeTask = this.changeTask.bind(this);
-        this.state = {
-            taskname: ''
-        }
-    }
-
-    changeTask(e) {
-        console.log(e.target.value);
-        this.setState({ taskname: e.target.value });
+        this.name = props.name;
+        this.from = props.from;
+        this.to = props.to;
+        this.handlerChange = props.handlerChange;
     }
 
     render() {
         return (
             <div>
                 <Stack direction="horizontal" gap={3}>
-                    <Form.Control className="me-auto" placeholder="Add your item here..." value={this.state.taskname} onChange={this.changeTask} />
-                    <Button variant="secondary" onClick={this.addTask}>Submit</Button>
-                    <div className="vr" />
-                    <Button variant="outline-danger">Reset</Button>
+                    <Form.Control name='name' className="me-auto" placeholder="タスク名" value={this.name} onChange={this.handlerLocalChange} />
+                    <Form.Control name='from' type='date' className="me-auto" placeholder="開始日" value={this.from} onChange={this.handlerChange} />
+                    <Form.Control name='to' type='date' className="me-auto" placeholder="終了日" value={this.to} onChange={this.handlerChange} />
+                    <Button variant="secondary" onClick={this.addTask}>Add</Button>
                 </Stack>
             </div>
         )
