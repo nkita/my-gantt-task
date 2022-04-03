@@ -23,8 +23,8 @@ class Element extends React.Component {
         displayOrder: 0
       }],
       new_task_name: '',
-      new_task_from: currentDate,
-      new_task_to: currentDate,
+      new_task_from: null,
+      new_task_to: null,
       id: 0
     }
 
@@ -36,11 +36,28 @@ class Element extends React.Component {
     const res = this.state.tasks.slice(0);
     const _id = `T-${this.state.id + 1}`;
     const _name = this.state.new_task_name ? this.state.new_task_name : 'No name';
+    const _from = function (date) {
+      if (date) {
+        const [y, m, d] = date.split('-');
+        return new Date(y, m - 1, d);
+      } else {
+        return currentDate;
+      }
+    }(this.state.new_task_from);
+
+    const _to = function (date) {
+      if (date) {
+        const [y, m, d] = date.split('-');
+        return new Date(y, m - 1, d);
+      } else {
+        return currentDate;
+      }
+    }(this.state.new_task_to);
 
     res.push(
       {
-        start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 18),
-        end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 19),
+        start: _from,
+        end: _to,
         name: _name,
         id: _id,
         progress: 0,
@@ -53,8 +70,15 @@ class Element extends React.Component {
     this.setState({ tasks: res, id: _id, new_task_name: '' });
   }
   handlerChange(e) {
-    console.log(e);
-    if (e.name = 'name') this.setState({ new_task_name: e.value });
+    const name = e.name;
+    const value = e.value;
+    if (name === 'name') {
+      this.setState({ new_task_name: value })
+    } else if (name === 'from') {
+      this.setState({ new_task_from: value })
+    } else if (name === 'to') {
+      this.setState({ new_task_to: value })
+    }
   }
   render() {
     return (
