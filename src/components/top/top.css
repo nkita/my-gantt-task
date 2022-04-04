@@ -1,0 +1,8 @@
+/* input[name='name'] {
+    background-color: yellow;
+} */
+
+/* input[name='name']:invalid {
+    background-color: red;
+
+} */

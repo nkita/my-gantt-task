@@ -7,6 +7,7 @@ import { Header } from './components/header/header.js';
 import { Top } from './components/top/top.js';
 // import { Footer } from './components/footer/footer.js';
 import "gantt-task-react/dist/index.css";
+import {dateConverter as dc,} from './lib/common.js'
 
 const currentDate = new Date();
 class Element extends React.Component {
@@ -23,15 +24,15 @@ class Element extends React.Component {
         displayOrder: 0
       }],
       new_task_name: '',
-      new_task_from: null,
-      new_task_to: null,
+      new_task_from: dc.data2str(currentDate),
+      new_task_to: dc.data2str(currentDate),
       id: 0
     }
 
     this.handlerChange = this.handlerChange.bind(this);
-    this.addTask = this.addTask.bind(this);
+    this.handlerAdd = this.handlerAdd.bind(this);
   }
-  addTask() {
+  handlerAdd() {
     console.log('add task');
     const res = this.state.tasks.slice(0);
     const _id = `T-${this.state.id + 1}`;
@@ -54,6 +55,7 @@ class Element extends React.Component {
       }
     }(this.state.new_task_to);
 
+    // タスク追加
     res.push(
       {
         start: _from,
@@ -85,9 +87,11 @@ class Element extends React.Component {
       <div>
         <Header />
         <Top
-          addTask={this.addTask}
+          handlerAdd={this.handlerAdd}
           handlerChange={(e) => this.handlerChange(e.target)}
           name={this.state.new_task_name}
+          from={this.state.new_task_from}
+          to={this.state.new_task_to}
         />
         <Gantt
           viewMode={"Day"}
